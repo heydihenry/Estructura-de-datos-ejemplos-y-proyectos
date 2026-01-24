@@ -1,5 +1,5 @@
 import unittest
-from array_list import ArrayList
+from python.util.ArrayList.array_list import ArrayList
 
 
 class TestArrayListAddIndex(unittest.TestCase):
