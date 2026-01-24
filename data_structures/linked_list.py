@@ -3,6 +3,10 @@
 Esta clase proporciona una estructura de datos de lista enlazada
 con operaciones básicas de inserción, búsqueda y eliminación.
 """
+
+from .exceptions import IndexOutOfRangeError
+
+
 class Node:
     """Nodo individual de la lista enlazada
     
@@ -14,6 +18,7 @@ class Node:
     def __init__(self, data=None):
         self.data = data
         self.next = None
+
 
 class LinkedList:
     """Lista enlazada simple
@@ -50,7 +55,6 @@ class LinkedList:
             current = current.next
         current.next = new_node
 
-
     def add_pos(self, index, data):
         """Inserta un elemento en una posición específica
 
@@ -59,10 +63,10 @@ class LinkedList:
             data: Dato a insertar
             
         Raises:
-            IndexError: Si el índice está fuera de rango
+            IndexOutOfRangeError: Si el índice está fuera de rango
         """
         if index < 0:
-            raise IndexError("Índice fuera de rango")
+            raise IndexOutOfRangeError("Índice fuera de rango")
 
         if index == 0:
             self.add_first(data)
@@ -71,11 +75,11 @@ class LinkedList:
         current = self.head
         for _ in range(index-1):
             if current is None:
-                raise IndexError("Índice fuera de rango")
+                raise IndexOutOfRangeError("Índice fuera de rango")
             current = current.next
 
         if current is None:
-            raise IndexError("Índice fuera de rango")
+            raise IndexOutOfRangeError("Índice fuera de rango")
 
         new_node = Node(data)
         new_node.next = current.next
@@ -91,16 +95,16 @@ class LinkedList:
             Dato en la posición especificada o None si no existe
 
         Raises:
-            IndexError: Si el índice está fuera de rango
+            IndexOutOfRangeError: Si el índice está fuera de rango
         """
         if index < 0:
-            raise IndexError("Índice fuera de rango")
+            raise IndexOutOfRangeError("Índice fuera de rango")
         current = self.head
         for _ in range(index):
             if current is None:
                 return None
             current = current.next
-        return current.data
+        return current.data if current else None
 
     def get_node(self, data):
         """Busca el primer nodo que contiene un dato específico
@@ -118,7 +122,6 @@ class LinkedList:
             current = current.next
         return None
 
-
     def delete(self, data):
         """Elimina la primera ocurrencia de un dato específico
 
@@ -129,7 +132,7 @@ class LinkedList:
             bool: True si se eliminó el elemento, False si no se encontró
         """
         if self.head is None:
-            return
+            return False
 
         if self.head.data == data:
             self.head = self.head.next
@@ -142,7 +145,6 @@ class LinkedList:
                 return True
             current = current.next
         return False
-
 
     def length(self):
         """Tamaño de la lista
@@ -157,4 +159,18 @@ class LinkedList:
             current = current.next
         return length
 
+    def __len__(self):
+        """Permite usar len() con la lista"""
+        return self.length()
 
+    def __str__(self):
+        """Representación en string de la lista"""
+        if not self.head:
+            return "[]"
+        
+        elements = []
+        current = self.head
+        while current:
+            elements.append(str(current.data))
+            current = current.next
+        return "[" + " -> ".join(elements) + "]"

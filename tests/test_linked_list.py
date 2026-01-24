@@ -1,7 +1,10 @@
-"""_summary_
-"""
+"""Tests unitarios para LinkedList"""
+
 import unittest
-from linkedlist import LinkedList
+from data_structures import LinkedList
+from data_structures.exceptions import IndexOutOfRangeError
+
+
 class TestLinkedList(unittest.TestCase):
     """Tests unitarios para la clase LinkedList"""
 
@@ -13,7 +16,7 @@ class TestLinkedList(unittest.TestCase):
         """Prueba insertar elemento al inicio en lista vacía"""
         self.lista.add_first(5)
         self.assertEqual(self.lista.get(0), 5)
-        self.assertEqual(self.lista.length(), 1)
+        self.assertEqual(len(self.lista), 1)
 
     def test_add_first_multiple_elements(self):
         """Prueba insertar múltiples elementos al inicio"""
@@ -28,7 +31,7 @@ class TestLinkedList(unittest.TestCase):
         """Prueba insertar elemento al final en lista vacía"""
         self.lista.add(10)
         self.assertEqual(self.lista.get(0), 10)
-        self.assertEqual(self.lista.length(), 1)
+        self.assertEqual(len(self.lista), 1)
 
     def test_add_multiple_elements(self):
         """Prueba insertar múltiples elementos al final"""
@@ -37,7 +40,7 @@ class TestLinkedList(unittest.TestCase):
         self.lista.add(3)
         self.assertEqual(self.lista.get(0), 1)
         self.assertEqual(self.lista.get(2), 3)
-        self.assertEqual(self.lista.length(), 3)
+        self.assertEqual(len(self.lista), 3)
 
     def test_add_pos_at_beginning(self):
         """Prueba insertar elemento en posición 0"""
@@ -53,17 +56,17 @@ class TestLinkedList(unittest.TestCase):
         self.lista.add(3)
         self.lista.add_pos(1, 2)
         self.assertEqual(self.lista.get(1), 2)
-        self.assertEqual(self.lista.length(), 3)
+        self.assertEqual(len(self.lista), 3)
 
     def test_add_pos_negative_index(self):
         """Prueba insertar con índice negativo debe lanzar excepción"""
-        with self.assertRaises(IndexError):
+        with self.assertRaises(IndexOutOfRangeError):
             self.lista.add_pos(-1, 5)
 
     def test_add_pos_out_of_range(self):
         """Prueba insertar en posición fuera de rango debe lanzar excepción"""
         self.lista.add(1)
-        with self.assertRaises(IndexError):
+        with self.assertRaises(IndexOutOfRangeError):
             self.lista.add_pos(5, 10)
 
     def test_get_valid_index(self):
@@ -80,7 +83,7 @@ class TestLinkedList(unittest.TestCase):
 
     def test_get_negative_index(self):
         """Prueba obtener elemento con índice negativo debe lanzar excepción"""
-        with self.assertRaises(IndexError):
+        with self.assertRaises(IndexOutOfRangeError):
             self.lista.get(-1)
 
     def test_get_node_existing(self):
@@ -104,7 +107,7 @@ class TestLinkedList(unittest.TestCase):
         result = self.lista.delete(1)
         self.assertTrue(result)
         self.assertEqual(self.lista.get(0), 2)
-        self.assertEqual(self.lista.length(), 1)
+        self.assertEqual(len(self.lista), 1)
 
     def test_delete_middle_element(self):
         """Prueba eliminar elemento intermedio de la lista"""
@@ -124,17 +127,25 @@ class TestLinkedList(unittest.TestCase):
     def test_delete_empty_list(self):
         """Prueba eliminar elemento de lista vacía"""
         result = self.lista.delete(1)
-        self.assertIsNone(result)
+        self.assertFalse(result)
 
     def test_length_empty_list(self):
         """Prueba obtener longitud de lista vacía"""
-        self.assertEqual(self.lista.length(), 0)
+        self.assertEqual(len(self.lista), 0)
 
     def test_length_with_elements(self):
         """Prueba obtener longitud de lista con elementos"""
         for i in range(5):
             self.lista.add(i)
-        self.assertEqual(self.lista.length(), 5)
+        self.assertEqual(len(self.lista), 5)
+
+    def test_str_representation(self):
+        """Prueba representación en string"""
+        self.assertEqual(str(self.lista), "[]")
+        self.lista.add(1)
+        self.lista.add(2)
+        self.assertEqual(str(self.lista), "[1 -> 2]")
+
 
 if __name__ == '__main__':
     unittest.main()

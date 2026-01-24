@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-data-structures"
+version = "1.0.0"
+description = "Implementaciones de estructuras de datos fundamentales en Python"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Heydi Henry Chibas", email = "henryheydi28@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://github.com/heydihenry/python-data-structures"
+Repository = "https://github.com/heydihenry/python-data-structures"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["data_structures*"]
