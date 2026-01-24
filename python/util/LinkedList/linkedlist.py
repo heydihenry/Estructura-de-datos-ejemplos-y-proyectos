@@ -50,7 +50,7 @@ class LinkedList:
             current = current.next
         current.next = new_node
 
-    #Insertar valor en cierta posicion
+
     def add_pos(self, index, data):
         """Inserta un elemento en una posición específica
 
